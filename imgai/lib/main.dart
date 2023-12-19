@@ -82,7 +82,7 @@ class _BottomNavigationBarExampleState
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_tree_outlined),
-            label: 'About',
+            label: 'History',
           ),
         ],
         currentIndex: _selectedIndex,
