@@ -38,16 +38,9 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              "assets/image.png",
-              height: 100,
-              width: 100,
-            ),
-            const Text(
-              'Generate Photo',
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 23, 98, 229)),
+              "assets/splash.png",
+              height: 600,
+              width: 600,
             ),
           ],
         ),
