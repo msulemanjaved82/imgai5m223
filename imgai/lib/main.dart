@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:imgai/splashscreen.dart';
+import 'package:imgai/Generate.dart';
+import 'profile.dart';
+import 'home.dart';
+import 'Splashscreen.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'AI image_Generator',
+      title: 'AI Image_Generator',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SplashScreen(),
+      home: const BottomNavigationBarExample(),
     );
   }
 }
 
 class BottomNavigationBarExample extends StatefulWidget {
-  const BottomNavigationBarExample({super.key});
+  const BottomNavigationBarExample({Key? key}) : super(key: key);
 
   @override
   State<BottomNavigationBarExample> createState() =>
@@ -34,21 +36,13 @@ class BottomNavigationBarExample extends StatefulWidget {
 class _BottomNavigationBarExampleState
     extends State<BottomNavigationBarExample> {
   int _selectedIndex = 0;
+
   static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Profile',
-      style: optionStyle,
-    ),
-    Text(
-      'About Us',
-      style: optionStyle,
-    ),
+    HomeScreen(),
+    GenerateScreen(),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -62,32 +56,88 @@ class _BottomNavigationBarExampleState
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 0, 24, 129),
-        title: const Text(
+        title: Text(
           'AI image_Generator',
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: Colors.white, // White font color
+            shadows: [
+              Shadow(
+                color: Colors.black, // Shadow color
+                offset: Offset(2, 2), // Shadow offset
+                blurRadius: 2, // Shadow blur radius
+              ),
+            ],
+          ),
         ),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_rounded),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_tree_outlined),
-            label: 'History',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color.fromARGB(255, 0, 4, 255),
-        onTap: _onItemTapped,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 0, 24, 129), // Background color
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3), // Shadow color
+              blurRadius: 10, // Shadow blur radius
+              offset: Offset(0, -5), // Shadow offset
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+                size: 30,
+                shadows: [
+                  Shadow(
+                    color: Colors.black, // Shadow color
+                    offset: Offset(2, 2), // Shadow offset
+                    blurRadius: 2, // Shadow blur radius
+                  ),
+                ],
+              ),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.account_tree_outlined,
+                size: 30,
+                shadows: [
+                  Shadow(
+                    color: Colors.black, // Shadow color
+                    offset: Offset(2, 2), // Shadow offset
+                    blurRadius: 2, // Shadow blur radius
+                  ),
+                ],
+              ),
+              label: 'Generate',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.account_circle_rounded,
+                size: 30,
+                shadows: [
+                  Shadow(
+                    color: Colors.black, // Shadow color
+                    offset: Offset(2, 2), // Shadow offset
+                    blurRadius: 2, // Shadow blur radius
+                  ),
+                ],
+              ),
+              label: 'Profile',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          backgroundColor: Color.fromARGB(255, 0, 24, 129),
+          selectedItemColor: Color.fromARGB(255, 0, 4, 255),
+          unselectedItemColor:
+              Colors.white, // Set unselected text color to white
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }
