@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:imgai/Generate.dart';
 import 'profile.dart';
-import 'home.dart';
-import 'Splashscreen.dart';
+import 'package:imgai/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,7 +40,7 @@ class _BottomNavigationBarExampleState
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white);
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    GenerateScreen(),
+    GeneratePage(),
     ProfileScreen(),
   ];
 
@@ -55,8 +54,8 @@ class _BottomNavigationBarExampleState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 0, 24, 129),
-        title: Text(
+        backgroundColor: const Color.fromARGB(255, 0, 24, 129),
+        title: const Text(
           'AI image_Generator',
           style: TextStyle(
             fontSize: 25,
@@ -77,12 +76,12 @@ class _BottomNavigationBarExampleState
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 0, 24, 129), // Background color
+          color: const Color.fromARGB(255, 0, 24, 129), // Background color
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.3), // Shadow color
               blurRadius: 10, // Shadow blur radius
-              offset: Offset(0, -5), // Shadow offset
+              offset: const Offset(0, -5), // Shadow offset
             ),
           ],
         ),
@@ -132,8 +131,8 @@ class _BottomNavigationBarExampleState
             ),
           ],
           currentIndex: _selectedIndex,
-          backgroundColor: Color.fromARGB(255, 0, 24, 129),
-          selectedItemColor: Color.fromARGB(255, 0, 4, 255),
+          backgroundColor: const Color.fromARGB(255, 0, 24, 129),
+          selectedItemColor: const Color.fromARGB(255, 0, 4, 255),
           unselectedItemColor:
               Colors.white, // Set unselected text color to white
           onTap: _onItemTapped,

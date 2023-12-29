@@ -12,53 +12,53 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentPage = 0;
 
   // Define your options data
-  List<Map<String, dynamic>> _options = [
+  final List<Map<String, dynamic>> _options = [
     {
       'label': 'Wallpapers',
       'icon': Icons.wallpaper,
       'gradientColors': [
-        Color.fromARGB(255, 10, 159, 204), // Light Blue
-        Color.fromARGB(255, 4, 62, 98), // Light Blue
+        const Color.fromARGB(255, 10, 159, 204), // Light Blue
+        const Color.fromARGB(255, 4, 62, 98), // Light Blue
       ],
     },
     {
       'label': 'Stock Img',
       'icon': Icons.image,
       'gradientColors': [
-        Color.fromARGB(255, 249, 249, 92), // Light Yellow
-        Color.fromARGB(255, 255, 255, 0), // Light Yellow
+        const Color.fromARGB(255, 249, 249, 92), // Light Yellow
+        const Color.fromARGB(255, 255, 255, 0), // Light Yellow
       ],
     },
     {
       'label': 'Illustration',
       'icon': Icons.palette,
       'gradientColors': [
-        Color.fromARGB(255, 144, 238, 144), // Light Green
-        Color.fromARGB(255, 50, 205, 50), // Light Green
+        const Color.fromARGB(255, 144, 238, 144), // Light Green
+        const Color.fromARGB(255, 50, 205, 50), // Light Green
       ],
     },
     {
       'label': 'Poster',
       'icon': Icons.picture_as_pdf,
       'gradientColors': [
-        Color.fromARGB(255, 255, 182, 193), // Light Pink
-        Color.fromARGB(255, 255, 105, 180), // Light Pink
+        const Color.fromARGB(255, 255, 182, 193), // Light Pink
+        const Color.fromARGB(255, 255, 105, 180), // Light Pink
       ],
     },
     {
       'label': 'Logo',
       'icon': Icons.image_search,
       'gradientColors': [
-        Color.fromARGB(255, 230, 230, 250), // Light Purple
-        Color.fromARGB(255, 148, 87, 235), // Light Purple
+        const Color.fromARGB(255, 230, 230, 250), // Light Purple
+        const Color.fromARGB(255, 148, 87, 235), // Light Purple
       ],
     },
     {
       'label': 'Mobile Icon',
       'icon': Icons.phone_android,
       'gradientColors': [
-        Color.fromARGB(255, 255, 182, 193), // Light Red
-        Color.fromARGB(255, 255, 69, 0), // Light Red
+        const Color.fromARGB(255, 255, 182, 193), // Light Red
+        const Color.fromARGB(255, 255, 69, 0), // Light Red
       ],
     },
   ];
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // Centered Slide of images with rounded corners and buttons
               Container(
                 height: 200,
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: PageView.builder(
                   controller: _pageController,
                   itemCount: 6,
@@ -101,23 +101,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: TweenAnimationBuilder(
                         tween: Tween<double>(begin: 0.8, end: 1.0),
-                        duration: Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 300),
                         builder: (context, scale, child) {
                           return Transform.scale(
                             scale: scale,
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.7,
-                              padding: EdgeInsets.all(16),
-                              margin: EdgeInsets.symmetric(horizontal: 16),
+                              padding: const EdgeInsets.all(16),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Color.fromARGB(255, 255, 255, 255),
+                                color: const Color.fromARGB(255, 255, 255, 255),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color.fromARGB(255, 255, 255, 255)
-                                        .withOpacity(0.3),
+                                    color:
+                                        const Color.fromARGB(255, 255, 255, 255)
+                                            .withOpacity(0.3),
                                     blurRadius: 5,
-                                    offset: Offset(0, 3),
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
                               ),
@@ -128,14 +130,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: 40,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(3),
-                                    gradient: LinearGradient(
+                                    gradient: const LinearGradient(
                                       colors: [
                                         Color.fromARGB(255, 0, 191, 255),
                                         Color.fromARGB(255, 5, 75, 118),
                                       ],
                                     ),
                                   ),
-                                  child: Center(
+                                  child: const Center(
                                     child: Text(
                                       'Generate',
                                       style: TextStyle(
@@ -159,21 +161,22 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 height: 1,
                 width: MediaQuery.of(context).size.width * 0.8,
-                color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.5),
-                margin: EdgeInsets.symmetric(vertical: 20),
+                color:
+                    const Color.fromARGB(255, 255, 255, 255).withOpacity(0.5),
+                margin: const EdgeInsets.symmetric(vertical: 20),
               ),
 
               // Options with circle corner and icon
               Container(
-                margin: EdgeInsets.symmetric(vertical: 20),
-                padding: EdgeInsets.all(16),
+                margin: const EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.all(16),
                 child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
                   ),
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: _options.length,
                   itemBuilder: (context, index) {
@@ -190,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     BoxShadow(
                       color: Colors.black.withOpacity(0.3),
                       blurRadius: 5,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -201,12 +204,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 1,
                 width: MediaQuery.of(context).size.width * 0.8,
                 color: Colors.white.withOpacity(0.5),
-                margin: EdgeInsets.symmetric(vertical: 20),
+                margin: const EdgeInsets.symmetric(vertical: 20),
               ),
 
               // Discover Gallery Heading and 2 x 8 grid
-              Padding(
-                padding: const EdgeInsets.all(16.0),
+              const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Text(
                   'Discover Gallery',
                   style: TextStyle(
@@ -225,8 +228,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               GridView.builder(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 1.5,
                   crossAxisSpacing: 8,
@@ -240,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     child: TweenAnimationBuilder(
                       tween: Tween<double>(begin: 0.8, end: 1.0),
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       builder: (context, scale, child) {
                         return Transform.scale(
                           scale: scale,
@@ -248,12 +251,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Color.fromARGB(255, 255, 255, 255),
+                              color: const Color.fromARGB(255, 255, 255, 255),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.3),
                                   blurRadius: 5,
-                                  offset: Offset(0, 3),
+                                  offset: const Offset(0, 3),
                                 ),
                               ],
                             ),
@@ -295,11 +298,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 BoxShadow(
                   color: Colors.black.withOpacity(0.3),
                   blurRadius: 5,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Icon(
               icon,
               size: 30,
@@ -307,10 +310,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             shadows: [
               Shadow(
@@ -342,12 +345,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       width: 8,
       height: 8,
-      margin: EdgeInsets.symmetric(horizontal: 6),
+      margin: const EdgeInsets.symmetric(horizontal: 6),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: _currentPage == index
-            ? Color.fromARGB(255, 0, 0, 0)
-            : Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
+            ? const Color.fromARGB(255, 0, 0, 0)
+            : const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
       ),
     );
   }
