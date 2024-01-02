@@ -1,15 +1,17 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'dart:typed_data';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
-class GeneratePage extends StatefulWidget {
-  const GeneratePage({Key? key}) : super(key: key);
+class generatePage extends StatefulWidget {
+  const generatePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _GeneratePageState createState() => _GeneratePageState();
 }
 
-class _HomePageState extends State<GeneratePage> {
+class _GeneratePageState extends State<generatePage> {
   List<PhotoItem> allPhotos = [
     PhotoItem(name: 'Forest', path: 'assets/forest.jpg'),
     PhotoItem(name: 'Forest', path: 'assets/forest(1).jpg'),
@@ -27,8 +29,6 @@ class _HomePageState extends State<GeneratePage> {
     PhotoItem(name: 'mountain', path: 'assets/mountain(2).jpg'),
     PhotoItem(name: 'mountain', path: 'assets/mountain(3).jpg'),
     PhotoItem(name: 'mountain', path: 'assets/mountain(4).jpg'),
-
-    // Add more photo items here with names and paths
   ];
 
   List<PhotoItem> displayedPhotos = [];
@@ -39,8 +39,7 @@ class _HomePageState extends State<GeneratePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: const Color.fromARGB(
-            255, 12, 78, 178), // Dark blue background color
+        color: const Color.fromARGB(255, 12, 78, 178),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -83,7 +82,7 @@ class _HomePageState extends State<GeneratePage> {
             ),
             const SizedBox(height: 10),
             SizedBox(
-              height: 75,
+              height: 120,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -95,10 +94,14 @@ class _HomePageState extends State<GeneratePage> {
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(
-                            photoItem.path,
-                            height: 80,
-                            width: 80,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: Image.asset(
+                              photoItem.path,
+                              height: 100,
+                              width: 100,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -115,10 +118,14 @@ class _HomePageState extends State<GeneratePage> {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(left: 80),
-                      child: Image.asset(
-                        selectedPhotos[index].path,
-                        height: 200,
-                        width: 200,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: Image.asset(
+                          selectedPhotos[index].path,
+                          height: 200,
+                          width: 250, // Increased width for selected photos
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     );
                   },
@@ -172,8 +179,7 @@ class _HomePageState extends State<GeneratePage> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    // Implement your download functionality here
-                    // For now, let's print a message
+                    downloadSelectedPhoto();
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.black,
@@ -205,9 +211,8 @@ class _HomePageState extends State<GeneratePage> {
 
   void generatePhotos(String prompt) {
     if (prompt.isEmpty) {
+      displayedPhotos = allPhotos;
     } else {
-      // Implement your photo generation logic based on the provided prompt
-      // For simplicity, I'm filtering photos that contain the prompt in their names
       displayedPhotos = allPhotos
           .where((photo) =>
               photo.name.toLowerCase().contains(prompt.toLowerCase()))
@@ -222,6 +227,35 @@ class _HomePageState extends State<GeneratePage> {
       selectedPhotos.clear();
       selectedPhotos.add(selectedPhoto);
     });
+  }
+
+  void downloadSelectedPhoto() async {
+    if (selectedPhotos.isNotEmpty) {
+      final photo = selectedPhotos.first;
+
+      try {
+        // Get the image bytes
+        Dio dio = Dio();
+        Response response = await dio.get(
+          photo.path,
+          options: Options(responseType: ResponseType.bytes),
+        );
+
+        // Save the image to the device
+        final directory = await getApplicationDocumentsDirectory();
+        File file = File('${directory.path}/${photo.name}.jpg');
+        await file.writeAsBytes(Uint8List.fromList(response.data));
+
+        // Show a download successful message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Download successful!'),
+          ),
+        );
+      } catch (e) {
+        print('Error downloading photo: $e');
+      }
+    }
   }
 }
 

@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  dio: ^4.0.0
+  path_provider: ^2.0.5
 
   cupertino_icons: ^1.0.2
 
@@ -26,3 +28,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/generatePage/Slide1.jpg
+    - assets/generatePage/Slide2.jpg
+    - assets/generatePage/Slide3.jpg
+

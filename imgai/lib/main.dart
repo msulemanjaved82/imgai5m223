@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:imgai/Generate.dart';
-import 'profile.dart';
-import 'package:imgai/home.dart';
+import 'package:imgai/generatePage.dart';
+import 'profilePage.dart';
+import 'package:imgai/homePage.dart';
+import 'package:imgai/loginPage.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const BottomNavigationBarExample(),
+      home: loginPage(),
     );
   }
 }
@@ -39,9 +41,9 @@ class _BottomNavigationBarExampleState
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white);
   static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    GeneratePage(),
-    ProfileScreen(),
+    homeScreen(),
+    generatePage(),
+    profileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -60,12 +62,12 @@ class _BottomNavigationBarExampleState
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold,
-            color: Colors.white, // White font color
+            color: Colors.white,
             shadows: [
               Shadow(
-                color: Colors.black, // Shadow color
-                offset: Offset(2, 2), // Shadow offset
-                blurRadius: 2, // Shadow blur radius
+                color: Colors.black,
+                offset: Offset(2, 2),
+                blurRadius: 2,
               ),
             ],
           ),
@@ -76,12 +78,12 @@ class _BottomNavigationBarExampleState
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 0, 24, 129), // Background color
+          color: const Color.fromARGB(255, 0, 24, 129),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3), // Shadow color
-              blurRadius: 10, // Shadow blur radius
-              offset: const Offset(0, -5), // Shadow offset
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 10,
+              offset: const Offset(0, -5),
             ),
           ],
         ),
@@ -93,9 +95,9 @@ class _BottomNavigationBarExampleState
                 size: 30,
                 shadows: [
                   Shadow(
-                    color: Colors.black, // Shadow color
-                    offset: Offset(2, 2), // Shadow offset
-                    blurRadius: 2, // Shadow blur radius
+                    color: Colors.black,
+                    offset: Offset(2, 2),
+                    blurRadius: 2,
                   ),
                 ],
               ),
@@ -107,9 +109,9 @@ class _BottomNavigationBarExampleState
                 size: 30,
                 shadows: [
                   Shadow(
-                    color: Colors.black, // Shadow color
-                    offset: Offset(2, 2), // Shadow offset
-                    blurRadius: 2, // Shadow blur radius
+                    color: Colors.black,
+                    offset: Offset(2, 2),
+                    blurRadius: 2,
                   ),
                 ],
               ),
@@ -121,9 +123,9 @@ class _BottomNavigationBarExampleState
                 size: 30,
                 shadows: [
                   Shadow(
-                    color: Colors.black, // Shadow color
-                    offset: Offset(2, 2), // Shadow offset
-                    blurRadius: 2, // Shadow blur radius
+                    color: Colors.black,
+                    offset: Offset(2, 2),
+                    blurRadius: 2,
                   ),
                 ],
               ),
@@ -133,8 +135,7 @@ class _BottomNavigationBarExampleState
           currentIndex: _selectedIndex,
           backgroundColor: const Color.fromARGB(255, 0, 24, 129),
           selectedItemColor: const Color.fromARGB(255, 0, 4, 255),
-          unselectedItemColor:
-              Colors.white, // Set unselected text color to white
+          unselectedItemColor: Colors.white,
           onTap: _onItemTapped,
         ),
       ),

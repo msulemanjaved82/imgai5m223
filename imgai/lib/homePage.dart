@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class homeScreen extends StatefulWidget {
+  const homeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final PageController _pageController = PageController();
-  int _currentPage = 0;
+class _HomeScreenState extends State<homeScreen> {
+  final PageController _pageController =
+      PageController(initialPage: 1, viewportFraction: 0.7);
+  int _currentPage = 1;
+
+  List<String> slideImages = [
+    "assets/generatePage/Slide1.jpg",
+    "assets/generatePage/Slide2.jpg",
+    "assets/generatePage/Slide3.jpg",
+  ];
 
   // Define your options data
   final List<Map<String, dynamic>> _options = [
@@ -88,71 +95,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(16),
                 child: PageView.builder(
                   controller: _pageController,
-                  itemCount: 6,
+                  itemCount: slideImages.length + 2,
                   onPageChanged: (int page) {
                     setState(() {
                       _currentPage = page;
                     });
                   },
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        // Add your onPressed logic here
-                      },
-                      child: TweenAnimationBuilder(
-                        tween: Tween<double>(begin: 0.8, end: 1.0),
-                        duration: const Duration(milliseconds: 300),
-                        builder: (context, scale, child) {
-                          return Transform.scale(
-                            scale: scale,
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              padding: const EdgeInsets.all(16),
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: const Color.fromARGB(255, 255, 255, 255),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color:
-                                        const Color.fromARGB(255, 255, 255, 255)
-                                            .withOpacity(0.3),
-                                    blurRadius: 5,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Align(
-                                alignment: Alignment.bottomRight,
-                                child: Container(
-                                  width: 70,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(3),
-                                    gradient: const LinearGradient(
-                                      colors: [
-                                        Color.fromARGB(255, 0, 191, 255),
-                                        Color.fromARGB(255, 5, 75, 118),
-                                      ],
-                                    ),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      'Generate',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    );
+                    return _buildSlides(index);
                   },
                 ),
               ),
@@ -239,7 +189,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      // Add your onPressed logic here
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GeneratedPage(
+                              image: slideImages[index % slideImages.length]),
+                        ),
+                      );
                     },
                     child: TweenAnimationBuilder(
                       tween: Tween<double>(begin: 0.8, end: 1.0),
@@ -273,6 +229,91 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildSlides(int index) {
+    int pageIndex = index;
+
+    if (index == 0) {
+      pageIndex = slideImages.length - 1;
+    } else if (index == slideImages.length + 1) {
+      pageIndex = 0;
+    } else {
+      pageIndex = index - 1;
+    }
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GeneratedPage(image: slideImages[pageIndex]),
+          ),
+        );
+      },
+      child: TweenAnimationBuilder(
+        tween: Tween<double>(begin: 0.8, end: 1.0),
+        duration: const Duration(milliseconds: 300),
+        builder: (context, scale, child) {
+          return Transform.scale(
+            scale: scale,
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: double.infinity,
+              padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 255, 255, 255),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color.fromARGB(255, 255, 255, 255)
+                        .withOpacity(0.3),
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Stack(
+                children: [
+                  Image.asset(
+                    slideImages[pageIndex],
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      width: 70,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(3),
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color.fromARGB(255, 0, 191, 255),
+                            Color.fromARGB(255, 5, 75, 118),
+                          ],
+                        ),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Generate',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -327,31 +368,61 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
+}
 
-  Widget _buildDots() {
-    return Positioned(
-      bottom: 10,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
-          5,
-          (index) => _buildDot(index),
+class GeneratedPage extends StatelessWidget {
+  final String image;
+
+  const GeneratedPage({Key? key, required this.image}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Generated Page'),
+      ),
+      body: Center(
+        child: GestureDetector(
+          onTap: () {
+            // Add your onPressed logic here
+          },
+          child: TweenAnimationBuilder(
+            tween: Tween<double>(begin: 0.8, end: 1.0),
+            duration: const Duration(milliseconds: 300),
+            builder: (context, scale, child) {
+              return Transform.scale(
+                scale: scale,
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Image.asset(
+                    image,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildDot(int index) {
-    return Container(
-      width: 8,
-      height: 8,
-      margin: const EdgeInsets.symmetric(horizontal: 6),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: _currentPage == index
-            ? const Color.fromARGB(255, 0, 0, 0)
-            : const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
-      ),
-    );
-  }
+void main() {
+  runApp(MaterialApp(
+    home: homeScreen(),
+  ));
 }
