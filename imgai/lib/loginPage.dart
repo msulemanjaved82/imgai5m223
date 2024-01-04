@@ -206,7 +206,7 @@ class _LoginPageState extends State<loginPage> {
     } else {
       // Display an error message or handle unsuccessful login
       setState(() {
-        errorMessage = "Invalid credentials";
+        errorMessage = "Invalid Credentials";
       });
     }
   }
