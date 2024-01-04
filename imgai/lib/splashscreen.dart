@@ -1,25 +1,26 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:imgai/main.dart';
+import 'signPage.dart'; // Import SignUpScreen.dart
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class splashScreen extends StatefulWidget {
+  const splashScreen({Key? key}) : super(key: key);
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<splashScreen> {
   @override
   void initState() {
     super.initState();
 
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const BottomNavigationBarExample(),
-          ));
+        context,
+        MaterialPageRoute(
+          builder: (context) => const signUpScreen(),
+        ),
+      );
     });
   }
 
@@ -31,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [
             Color.fromARGB(255, 131, 129, 245),
-            Color.fromARGB(255, 21, 0, 255)
+            Color.fromARGB(255, 21, 0, 255),
           ], begin: Alignment.topRight, end: Alignment.bottomLeft),
         ),
         child: Column(

@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
-import 'main.dart'; // Import main.dart to access BottomNavigationBarExample
+import 'main.dart';
 
 class loginPage extends StatefulWidget {
+  final Map<String, String> userCredentials;
+
+  const loginPage({Key? key, required this.userCredentials}) : super(key: key);
+
   @override
-  _loginPageState createState() => _loginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _loginPageState extends State<loginPage> {
+class _LoginPageState extends State<loginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   bool rememberMe = false;
   bool showPassword = false;
+  String errorMessage = "";
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +66,12 @@ class _loginPageState extends State<loginPage> {
               textAlign: TextAlign.center,
             ),
           ),
-          _buildTextField(label: 'Email', textColor: Colors.white),
+          _buildTextField(
+              label: 'Email',
+              textColor: Colors.white,
+              controller: _emailController),
           SizedBox(height: 16),
-          _buildPasswordField(),
+          _buildPasswordField(controller: _passwordController),
           SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
@@ -79,6 +90,11 @@ class _loginPageState extends State<loginPage> {
             ),
           ),
           SizedBox(height: 16),
+          if (errorMessage.isNotEmpty)
+            Text(
+              errorMessage,
+              style: TextStyle(color: Colors.red),
+            ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -125,10 +141,13 @@ class _loginPageState extends State<loginPage> {
   }
 
   Widget _buildTextField(
-      {required String label, Color textColor = Colors.black}) {
+      {required String label,
+      Color textColor = Colors.black,
+      required TextEditingController controller}) {
     return Container(
       margin: EdgeInsets.only(bottom: 16),
       child: TextField(
+        controller: controller,
         style: TextStyle(color: textColor),
         decoration: InputDecoration(
           labelText: label,
@@ -141,10 +160,11 @@ class _loginPageState extends State<loginPage> {
     );
   }
 
-  Widget _buildPasswordField() {
+  Widget _buildPasswordField({required TextEditingController controller}) {
     return Container(
       margin: EdgeInsets.only(bottom: 16),
       child: TextField(
+        controller: controller,
         style: TextStyle(color: Colors.white),
         obscureText: !showPassword,
         decoration: InputDecoration(
@@ -170,21 +190,24 @@ class _loginPageState extends State<loginPage> {
   }
 
   void _login(BuildContext context) {
-    // Replace this with your actual authentication logic
-    // For now, just navigate to the BottomNavigationBarExample
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const BottomNavigationBarExample(),
-      ),
-    );
-  }
-}
+    String enteredEmail = _emailController.text;
+    String enteredPassword = _passwordController.text;
 
-void main() {
-  runApp(
-    MaterialApp(
-      home: loginPage(),
-    ),
-  );
+    // Check if the entered email exists in the stored credentials map
+    if (widget.userCredentials.containsKey(enteredEmail) &&
+        widget.userCredentials[enteredEmail] == enteredPassword) {
+      // Navigate to the BottomNavigationBarExample if the credentials match
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const BottomNavigationBarExample(),
+        ),
+      );
+    } else {
+      // Display an error message or handle unsuccessful login
+      setState(() {
+        errorMessage = "Invalid credentials";
+      });
+    }
+  }
 }

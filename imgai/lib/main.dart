@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:imgai/generatePage.dart';
-import 'profilePage.dart';
 import 'package:imgai/homePage.dart';
-import 'package:imgai/loginPage.dart';
-
+import 'package:imgai/profilePage.dart';
+import 'loginPage.dart'; // Import LoginPage.dart
+import 'signPage.dart';
+import 'package:flutter/material.dart';
+import 'package:imgai/splashScreen.dart'; // Import SplashScreen.dart
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: loginPage(),
+      home: splashScreen(), // Start with SplashScreen
     );
   }
 }
