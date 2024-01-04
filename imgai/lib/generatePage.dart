@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
-import "package:url_launcher/url_launcher.dart";
+import 'package:url_launcher/url_launcher.dart';
 
 class generatePage extends StatefulWidget {
   const generatePage({Key? key}) : super(key: key);
@@ -30,8 +30,8 @@ class _HomePageState extends State<generatePage> {
     PhotoItem(name: 'mountain', path: 'assets/mountain(2).jpg'),
     PhotoItem(name: 'mountain', path: 'assets/mountain(3).jpg'),
     PhotoItem(name: 'mountain', path: 'assets/mountain(4).jpg'),
-    // Add more photo items here with names and paths
   ];
+
   final Map<PhotoItem, double> selectedPhotosRatings = {};
   List<PhotoItem> displayedPhotos = [];
   List<PhotoItem> selectedPhotos = [];
@@ -90,164 +90,175 @@ class _HomePageState extends State<generatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          color: const Color.fromARGB(
-              255, 12, 78, 178), // Dark blue background color
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Prompt here',
-                style: TextStyle(fontSize: 20, color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.4),
-                      spreadRadius: 4,
-                      blurRadius: 5,
-                      offset: const Offset(3, 4),
-                    ),
-                  ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 0, 21, 112),
+              Color.fromARGB(255, 13, 29, 42),
+              Color.fromARGB(255, 0, 21, 112),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Prompt here',
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  textAlign: TextAlign.center,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TextFormField(
-                    controller: promptController,
-                    style: const TextStyle(color: Colors.black),
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Write your prompt here',
+                const SizedBox(height: 10),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.4),
+                        spreadRadius: 4,
+                        blurRadius: 5,
+                        offset: const Offset(3, 4),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: TextFormField(
+                      controller: promptController,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Write your prompt here',
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                height: 75,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      for (final photoItem in displayedPhotos)
-                        GestureDetector(
-                          onTap: () {
-                            selectPhoto(photoItem);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.asset(
-                                photoItem.path,
-                                height: 100,
-                                width: 100,
-                                fit: BoxFit.cover,
+                const SizedBox(height: 20),
+                SizedBox(
+                  height: 75,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (final photoItem in displayedPhotos)
+                          GestureDetector(
+                            onTap: () {
+                              selectPhoto(photoItem);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.asset(
+                                  photoItem.path,
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                child: Center(
-                  child: selectedPhotos.isNotEmpty
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.asset(
-                                selectedPhotos.first.path,
-                                height: 250,
-                                width: 250,
-                                fit: BoxFit.cover,
+                const SizedBox(height: 20),
+                Expanded(
+                  child: Center(
+                    child: selectedPhotos.isNotEmpty
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.asset(
+                                  selectedPhotos.first.path,
+                                  height: 250,
+                                  width: 250,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                for (int i = 1; i <= 5; i++)
-                                  GestureDetector(
-                                    onTap: () {
-                                      onStarTap(i);
-                                    },
-                                    child: Icon(
-                                      Icons.star,
-                                      color: i <= selectedStarCount
-                                          ? Colors.yellow
-                                          : Colors.grey,
+                              const SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  for (int i = 1; i <= 5; i++)
+                                    GestureDetector(
+                                      onTap: () {
+                                        onStarTap(i);
+                                      },
+                                      child: Icon(
+                                        Icons.star,
+                                        color: i <= selectedStarCount
+                                            ? Colors.yellow
+                                            : Colors.grey,
+                                      ),
                                     ),
-                                  ),
-                              ],
-                            ),
-                          ],
-                        )
-                      : Container(), // Add an empty container if no photo is selected
+                                ],
+                              ),
+                            ],
+                          )
+                        : Container(), // Add an empty container if no photo is selected
+                  ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      shareSelectedPhoto(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.white,
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(3.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        shareSelectedPhoto(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.white,
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3.0),
+                        ),
+                      ),
+                      icon: const Icon(Icons.share, size: 20),
+                      label: const Padding(
+                        padding: EdgeInsets.all(1),
+                        child: Text(
+                          'Share',
+                          style: TextStyle(fontSize: 13),
+                        ),
                       ),
                     ),
-                    icon: const Icon(Icons.share, size: 20),
-                    label: const Padding(
-                      padding: EdgeInsets.all(1),
-                      child: Text(
-                        'Share',
-                        style: TextStyle(fontSize: 13),
+                    ElevatedButton(
+                      onPressed: () {
+                        generatePhotos(promptController.text);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.white,
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3.0),
+                        ),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(1),
+                        child: Text(
+                          'Generate',
+                          style: TextStyle(fontSize: 13),
+                        ),
                       ),
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      generatePhotos(promptController.text);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.white,
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(3.0),
-                      ),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(1),
-                      child: Text(
-                        'Generate',
-                        style: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
           ),
         ),
       ),
