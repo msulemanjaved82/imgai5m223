@@ -45,7 +45,7 @@ class _BottomNavigationBarExampleState
   static const List<Widget> _widgetOptions = <Widget>[
     homeScreen(),
     generatePage(),
-    profileScreen(),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {

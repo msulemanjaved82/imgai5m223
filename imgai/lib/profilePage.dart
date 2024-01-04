@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
 
-class profileScreen extends StatefulWidget {
-  const profileScreen({Key? key}) : super(key: key);
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<profileScreen> createState() => _ProfileScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<profileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: null, // Set title to null to remove the text
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(0),
-          child: Container(),
-        ),
-      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -34,65 +27,83 @@ class _ProfileScreenState extends State<profileScreen> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Icon(
-                  Icons.account_circle_rounded,
-                  size: 30,
-                  shadows: [
-                    Shadow(
-                      color: Color.fromARGB(255, 224, 221, 221), // Shadow color
-                      offset: Offset(2, 2), // Shadow offset
-                      blurRadius: 2, // Shadow blur radius
-                    ),
-                  ],
-                ),
-                Align(
-                  alignment: Alignment.center,
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 4,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
                   child: CircleAvatar(
-                    // Use a dummy profile picture
-                    radius: 50.0,
-                    backgroundColor:
-                        Colors.transparent, // Make the background transparent
+                    radius: 60.0,
+                    backgroundColor: Colors.transparent,
+                    child: Icon(
+                      Icons.account_circle_rounded,
+                      size: 60,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 SizedBox(height: 16.0),
 
                 // User's name
-                Center(
-                  child: Text(
-                    'John Doe',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white, // Set text color to white
-                    ),
+                Text(
+                  'John Doe',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(0.3),
+                        offset: Offset(2, 2),
+                        blurRadius: 2,
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 8.0),
 
                 // User's email
-                Center(
-                  child: Text(
-                    'john.doe@example.com',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white, // Set text color to white
-                    ),
+                Text(
+                  'john.doe@example.com',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(0.3),
+                        offset: Offset(2, 2),
+                        blurRadius: 2,
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 16.0),
 
                 // History text and Heart icon
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       ' History',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white, // Set text color to white
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black.withOpacity(0.3),
+                            offset: Offset(2, 2),
+                            blurRadius: 2,
+                          ),
+                        ],
                       ),
                     ),
                     Icon(
@@ -107,7 +118,7 @@ class _ProfileScreenState extends State<profileScreen> {
                 // Line separator
                 Container(
                   height: 2,
-                  width: double.infinity,
+                  width: 50,
                   color: Colors.white,
                   margin: EdgeInsets.symmetric(vertical: 16.0),
                 ),
@@ -123,6 +134,13 @@ class _ProfileScreenState extends State<profileScreen> {
                     return Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 4,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10.0),
