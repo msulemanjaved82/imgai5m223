@@ -1,18 +1,16 @@
-// ignore_for_file: file_names, depend_on_referenced_packages, deprecated_member_use
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class generatePage extends StatefulWidget {
-  const generatePage({Key? key}) : super(key: key);
+class GeneratePage extends StatefulWidget {
+  const GeneratePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _GeneratePageState createState() => _GeneratePageState();
 }
 
-class _HomePageState extends State<generatePage> {
+class _GeneratePageState extends State<GeneratePage> {
   List<PhotoItem> allPhotos = [
     PhotoItem(name: 'Forest', path: 'assets/forest.jpg'),
     PhotoItem(name: 'Forest', path: 'assets/forest(1).jpg'),
@@ -41,33 +39,25 @@ class _HomePageState extends State<generatePage> {
   void shareSelectedPhoto(BuildContext context) {
     if (selectedPhotos.isNotEmpty) {
       final selectedPhoto = selectedPhotos.first;
-
-      // Create a File object for the selected photo
       final file = File(selectedPhoto.path);
 
-      // Show a dialog with sharing options
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.zero,
-            ),
             title: const Text('Share Photo'),
             content: const Text('How do you want to share the photo?'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  // Share using the share package
                   Share.shareFiles([file.path],
                       text: 'Check out this photo: ${selectedPhoto.name}');
-                  Navigator.of(context).pop(); // Close the dialog
+                  Navigator.of(context).pop();
                 },
                 child: const Text('Share via Other Apps'),
               ),
               TextButton(
                 onPressed: () async {
-                  // Open WhatsApp using url_launcher
                   final url =
                       'whatsapp://send?text=Check out this photo: ${selectedPhoto.name}&file=$file';
                   if (await canLaunch(url)) {
@@ -75,11 +65,10 @@ class _HomePageState extends State<generatePage> {
                   } else {
                     print('Could not launch WhatsApp');
                   }
-                  Navigator.of(context).pop(); // Close the dialog
+                  Navigator.of(context).pop();
                 },
                 child: const Text('Share via WhatsApp'),
               ),
-              // Add more buttons for other sharing options if needed
             ],
           );
         },
@@ -90,11 +79,47 @@ class _HomePageState extends State<generatePage> {
     }
   }
 
+  void generatePhotos(String prompt) {
+    if (prompt.isEmpty) {
+      // Handle case when prompt is empty
+    } else {
+      displayedPhotos = allPhotos
+          .where((photo) =>
+              photo.name.toLowerCase().contains(prompt.toLowerCase()))
+          .toList();
+    }
+
+    setState(() {});
+  }
+
+  void selectPhoto(PhotoItem selectedPhoto) {
+    setState(() {
+      selectedPhotos.clear();
+      selectedPhotos.add(selectedPhoto);
+      selectedStarCount = selectedPhotosRatings[selectedPhoto] ?? 0;
+    });
+  }
+
+  void onStarTap(int starCount) {
+    setState(() {
+      selectedStarCount = starCount.toDouble();
+      if (selectedPhotos.isNotEmpty) {
+        selectedPhotosRatings[selectedPhotos.first] = selectedStarCount;
+      }
+    });
+  }
+
+  void saveToHistory() {
+    if (selectedPhotos.isNotEmpty) {
+      selectedPhotosRatings[selectedPhotos.first] = selectedStarCount;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color.fromARGB(255, 0, 21, 112),
@@ -137,165 +162,119 @@ class _HomePageState extends State<generatePage> {
                       style: const TextStyle(color: Colors.black),
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Write your prompt here',
+                        hintText: 'Enter your prompt...',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        suffixIcon: Icon(Icons.search, color: Colors.grey),
                       ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  height: 75,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        for (final photoItem in displayedPhotos)
-                          GestureDetector(
-                            onTap: () {
-                              selectPhoto(photoItem);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.asset(
-                                  photoItem.path,
-                                  height: 100,
-                                  width: 100,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ),
-                      ],
+                      onChanged: generatePhotos,
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
                 Expanded(
-                  child: Center(
-                    child: selectedPhotos.isNotEmpty
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 12.0,
+                      mainAxisSpacing: 12.0,
+                    ),
+                    itemCount: displayedPhotos.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final photo = displayedPhotos[index];
+                      return InkWell(
+                        onTap: () => selectPhoto(photo),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Stack(
                             children: [
                               ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(12.0),
                                 child: Image.asset(
-                                  selectedPhotos.first.path,
-                                  height: 210,
-                                  width: 210,
+                                  photo.path,
                                   fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: double.infinity,
                                 ),
                               ),
-                              const SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  for (int i = 1; i <= 5; i++)
-                                    GestureDetector(
-                                      onTap: () {
-                                        onStarTap(i);
-                                      },
-                                      child: Icon(
+                              if (selectedPhotos.contains(photo))
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                ),
+                              if (selectedPhotosRatings.containsKey(photo))
+                                Positioned(
+                                  top: 12.0,
+                                  right: 12.0,
+                                  child: Row(
+                                    children: [
+                                      Icon(
                                         Icons.star,
-                                        color: i <= selectedStarCount
-                                            ? Colors.yellow
-                                            : const Color.fromARGB(
-                                                255, 215, 199, 199),
+                                        color: Colors.yellow,
+                                        size: 24.0,
                                       ),
-                                    ),
-                                ],
-                              ),
+                                      const SizedBox(width: 8.0),
+                                      Text(
+                                        selectedPhotosRatings[photo].toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                             ],
-                          )
-                        : Container(), // Add an empty container if no photo is selected
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        shareSelectedPhoto(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.black,
-                        backgroundColor: Colors.white,
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4.0),
+                const SizedBox(height: 20),
+                if (selectedPhotos.isNotEmpty)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => shareSelectedPhoto(context),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20.0,
+                            vertical: 12.0,
+                          ),
                         ),
-                      ),
-                      icon: const Icon(Icons.share, size: 20),
-                      label: const Padding(
-                        padding: EdgeInsets.all(1),
-                        child: Text(
+                        child: const Text(
                           'Share',
-                          style: TextStyle(fontSize: 13),
+                          style: TextStyle(fontSize: 16.0),
                         ),
                       ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        generatePhotos(promptController.text);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.black,
-                        backgroundColor: Colors.white,
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4.0),
+                      Row(
+                        children: List.generate(
+                          5,
+                          (index) => GestureDetector(
+                            onTap: () => onStarTap(index + 1),
+                            child: Icon(
+                              Icons.star,
+                              color: (index + 1) <= selectedStarCount
+                                  ? Colors.yellow
+                                  : Colors.grey,
+                              size: 32.0,
+                            ),
+                          ),
                         ),
                       ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(1),
-                        child: Text(
-                          'Generate',
-                          style: TextStyle(fontSize: 13),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+                    ],
+                  ),
               ],
             ),
           ),
         ),
       ),
     );
-  }
-
-  void generatePhotos(String prompt) {
-    if (prompt.isEmpty) {
-    } else {
-      // Implement your photo generation logic based on the provided prompt
-      // For simplicity, I'm filtering photos that contain the prompt in their names
-      displayedPhotos = allPhotos
-          .where((photo) =>
-              photo.name.toLowerCase().contains(prompt.toLowerCase()))
-          .toList();
-    }
-
-    setState(() {});
-  }
-
-  void selectPhoto(PhotoItem selectedPhoto) {
-    setState(() {
-      selectedPhotos.clear();
-      selectedPhotos.add(selectedPhoto);
-      selectedStarCount = 0; // Reset star count when a new photo is selected
-    });
-  }
-
-  void onStarTap(int starCount) {
-    setState(() {
-      selectedStarCount = starCount.toDouble();
-      print('Selected Star Count: $selectedStarCount');
-    });
   }
 }
 

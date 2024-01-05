@@ -44,7 +44,7 @@ class _BottomNavigationBarExampleState
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white);
   static const List<Widget> _widgetOptions = <Widget>[
     homeScreen(),
-    generatePage(),
+    GeneratePage(),
     ProfileScreen(),
   ];
 
