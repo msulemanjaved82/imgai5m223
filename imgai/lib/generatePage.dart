@@ -94,7 +94,7 @@ class _HomePageState extends State<generatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color.fromARGB(255, 0, 21, 112),
@@ -183,8 +183,8 @@ class _HomePageState extends State<generatePage> {
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image.asset(
                                   selectedPhotos.first.path,
-                                  height: 250,
-                                  width: 250,
+                                  height: 210,
+                                  width: 210,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -201,7 +201,8 @@ class _HomePageState extends State<generatePage> {
                                         Icons.star,
                                         color: i <= selectedStarCount
                                             ? Colors.yellow
-                                            : Colors.grey,
+                                            : const Color.fromARGB(
+                                                255, 215, 199, 199),
                                       ),
                                     ),
                                 ],
@@ -223,7 +224,7 @@ class _HomePageState extends State<generatePage> {
                         backgroundColor: Colors.white,
                         elevation: 4,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(3.0),
+                          borderRadius: BorderRadius.circular(4.0),
                         ),
                       ),
                       icon: const Icon(Icons.share, size: 20),
@@ -244,7 +245,7 @@ class _HomePageState extends State<generatePage> {
                         backgroundColor: Colors.white,
                         elevation: 4,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(3.0),
+                          borderRadius: BorderRadius.circular(4.0),
                         ),
                       ),
                       child: const Padding(
