@@ -50,6 +50,9 @@ class _HomePageState extends State<generatePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
             title: const Text('Share Photo'),
             content: const Text('How do you want to share the photo?'),
             actions: <Widget>[
