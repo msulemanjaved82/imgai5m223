@@ -92,7 +92,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      ' History',
+                      ' History1',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
