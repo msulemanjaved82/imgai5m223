@@ -109,7 +109,7 @@ class _LoginPageState extends State<loginPage> {
                     },
                   ),
                   Text(
-                    'Remember me*',
+                    'Remember me 3',
                     style: TextStyle(color: Colors.white),
                   ),
                 ],
