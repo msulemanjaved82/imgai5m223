@@ -54,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                 // User's name
                 Text(
-                  'John Doe1',
+                  'John Doe',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -72,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                 // User's email
                 Text(
-                  'john.doe@example.com',
+                  'john.doe@example.com1',
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.white,
