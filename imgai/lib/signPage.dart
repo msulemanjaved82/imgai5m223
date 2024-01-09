@@ -17,7 +17,7 @@ class _SignUpScreenState extends State<signUpScreen> {
   // Add a map to store user credentials
   Map<String, String> userCredentials = {};
 
-  String errorMessage = "";
+  String errorMessage a = "";
 
   Future<void> _handleSignUp(BuildContext context) async {
     String username = _usernameController.text;
