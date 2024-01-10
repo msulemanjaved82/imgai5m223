@@ -95,13 +95,7 @@ class _BottomNavigationBarExampleState
               icon: Icon(
                 Icons.home,
                 size: 30,
-                shadows: [
-                  Shadow(
-                    color: Colors.black,
-                    offset: Offset(2, 2),
-                    blurRadius: 2,
-                  ),
-                ],
+                // other icon configurations...
               ),
               label: 'Home',
             ),
@@ -109,13 +103,7 @@ class _BottomNavigationBarExampleState
               icon: Icon(
                 Icons.account_tree_outlined,
                 size: 30,
-                shadows: [
-                  Shadow(
-                    color: Colors.black,
-                    offset: Offset(2, 2),
-                    blurRadius: 2,
-                  ),
-                ],
+                // other icon configurations...
               ),
               label: 'Generate',
             ),
@@ -123,13 +111,7 @@ class _BottomNavigationBarExampleState
               icon: Icon(
                 Icons.account_circle_rounded,
                 size: 30,
-                shadows: [
-                  Shadow(
-                    color: Colors.black,
-                    offset: Offset(2, 2),
-                    blurRadius: 2,
-                  ),
-                ],
+                // other icon configurations...
               ),
               label: 'Profile',
             ),

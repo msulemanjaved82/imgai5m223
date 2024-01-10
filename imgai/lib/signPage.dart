@@ -103,11 +103,14 @@ class _SignUpScreenState extends State<signUpScreen> {
               SizedBox(height: 24.0),
               ElevatedButton(
                 onPressed: () => _handleSignUp(context),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 48),
-                  child: Text(
-                    'Sign Up',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  child: Center(
+                    child: Text(
+                      'Sign Up',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
                   ),
                 ),
                 style: ElevatedButton.styleFrom(

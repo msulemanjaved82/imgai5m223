@@ -18,7 +18,8 @@ class _HomeScreenState extends State<homeScreen> {
     "assets/generatePage/Slide3.jpg",
   ];
 
-  // Define your options data
+  String discoverGalleryImage = "assets/generatePage/Slide2.jpg";
+
   final List<Map<String, dynamic>> _options = [
     {
       'label': 'Wallpapers',
@@ -89,7 +90,6 @@ class _HomeScreenState extends State<homeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Centered Slide of images with rounded corners and buttons
               Container(
                 height: 200,
                 padding: const EdgeInsets.all(16),
@@ -106,8 +106,6 @@ class _HomeScreenState extends State<homeScreen> {
                   },
                 ),
               ),
-
-              // Separator
               Container(
                 height: 1,
                 width: MediaQuery.of(context).size.width * 0.8,
@@ -115,8 +113,6 @@ class _HomeScreenState extends State<homeScreen> {
                     const Color.fromARGB(255, 255, 255, 255).withOpacity(0.5),
                 margin: const EdgeInsets.symmetric(vertical: 20),
               ),
-
-              // Options with circle corner and icon
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 20),
                 padding: const EdgeInsets.all(16),
@@ -148,18 +144,14 @@ class _HomeScreenState extends State<homeScreen> {
                   ],
                 ),
               ),
-
-              // Separator
               Container(
                 height: 1,
                 width: MediaQuery.of(context).size.width * 0.8,
                 color: Colors.white.withOpacity(0.5),
                 margin: const EdgeInsets.symmetric(vertical: 20),
               ),
-
-              // Discover Gallery Heading and 2 x 8 grid
               const Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(20.0),
                 child: Text(
                   'Discover Gallery',
                   style: TextStyle(
@@ -182,8 +174,8 @@ class _HomeScreenState extends State<homeScreen> {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 1.5,
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
                 ),
                 itemCount: 16,
                 itemBuilder: (context, index) {
@@ -192,8 +184,8 @@ class _HomeScreenState extends State<homeScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => GeneratedPage(
-                              image: slideImages[index % slideImages.length]),
+                          builder: (context) =>
+                              GeneratedPage(image: discoverGalleryImage),
                         ),
                       );
                     },
@@ -204,9 +196,10 @@ class _HomeScreenState extends State<homeScreen> {
                         return Transform.scale(
                           scale: scale,
                           child: Container(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(10.0),
+                            margin: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(15),
                               color: const Color.fromARGB(255, 255, 255, 255),
                               boxShadow: [
                                 BoxShadow(
@@ -215,9 +208,10 @@ class _HomeScreenState extends State<homeScreen> {
                                   offset: const Offset(0, 3),
                                 ),
                               ],
-                            ),
-                            child: Center(
-                              child: Text('Image $index'),
+                              image: DecorationImage(
+                                image: AssetImage(discoverGalleryImage),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         );
@@ -262,7 +256,7 @@ class _HomeScreenState extends State<homeScreen> {
             child: Container(
               width: MediaQuery.of(context).size.width * 0.7,
               height: double.infinity,
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(0),
               margin: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -285,7 +279,7 @@ class _HomeScreenState extends State<homeScreen> {
                     height: double.infinity,
                   ),
                   Align(
-                    alignment: Alignment.bottomRight,
+                    alignment: Alignment.bottomCenter,
                     child: Container(
                       width: 70,
                       height: 40,
