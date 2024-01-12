@@ -124,7 +124,7 @@ class _SignUpScreenState extends State<signUpScreen> {
               ),
               SizedBox(height: 16.0),
               Text(
-                'oR',
+                'or',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
