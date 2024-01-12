@@ -1,4 +1,4 @@
-tterimport 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'loginPage.dart';
 
@@ -124,7 +124,7 @@ class _SignUpScreenState extends State<signUpScreen> {
               ),
               SizedBox(height: 16.0),
               Text(
-                'OR',
+                'oR',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
